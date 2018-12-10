@@ -17,6 +17,20 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "example-ng6-lib": [
+        "dist/example-ng6-lib"
+      ],
+      "example-ng6-lib/*": [
+        "dist/example-ng6-lib/*"
+      ],
+      "ng-vk-ui": [
+        "dist/ng-vk-ui"
+      ],
+      "ng-vk-ui/*": [
+        "dist/ng-vk-ui/*"
+      ]
+    }
   }
 }

@@ -133,6 +133,76 @@
           }
         }
       }
+    },
+    "example-ng6-lib": {
+      "root": "projects/example-ng6-lib",
+      "sourceRoot": "projects/example-ng6-lib/src",
+      "projectType": "library",
+      "prefix": "enl",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/example-ng6-lib/tsconfig.lib.json",
+            "project": "projects/example-ng6-lib/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/example-ng6-lib/src/test.ts",
+            "tsConfig": "projects/example-ng6-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/example-ng6-lib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/example-ng6-lib/tsconfig.lib.json",
+              "projects/example-ng6-lib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "ng-vk-ui": {
+      "root": "projects/ng-vk-ui",
+      "sourceRoot": "projects/ng-vk-ui/src",
+      "projectType": "library",
+      "prefix": "vk",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ng-vk-ui/tsconfig.lib.json",
+            "project": "projects/ng-vk-ui/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-vk-ui/src/test.ts",
+            "tsConfig": "projects/ng-vk-ui/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-vk-ui/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-vk-ui/tsconfig.lib.json",
+              "projects/ng-vk-ui/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "ng-vk-ui-master"

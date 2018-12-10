@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ng-vk-ui-master';
+  value = `
+  <h1>你好世界</h1>
+  <p>hello world</p>
+  `;
 }
