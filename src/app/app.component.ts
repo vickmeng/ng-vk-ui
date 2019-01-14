@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
+import { Scroll } from 'projects/ng-vk-ui/src/lib/scroll/scroll.component';
 
 @Component({
   selector: 'app-root',
@@ -6,8 +7,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  value = `
-  <h1>你好世界</h1>
-  <p>hello world</p>
-  `;
+  a = 1;
+
+  constructor() {
+  }
+
+  onScrollStart(e: Scroll) {
+    console.log(e);
+  }
+
+  onScrollEnd(e: Scroll) {
+    console.log(e);
+  }
+
 }

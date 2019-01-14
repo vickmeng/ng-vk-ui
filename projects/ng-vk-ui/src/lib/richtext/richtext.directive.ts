@@ -1,4 +1,4 @@
-import { Directive, OnInit, Input, AfterViewInit, forwardRef, ElementRef } from '@angular/core';
+import { Directive, OnInit, AfterViewInit, forwardRef, ElementRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import * as wangEditor from 'wangeditor/release/wangEditor.min.js';
 
