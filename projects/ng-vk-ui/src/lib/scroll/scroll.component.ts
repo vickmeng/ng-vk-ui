@@ -1,14 +1,41 @@
-import { Component, Input, ViewChild, ElementRef , AfterViewInit, Output, EventEmitter, ChangeDetectionStrategy
+import {
+  Component,
+  Input,
+  Output,
+  ViewChild,
+  AfterViewInit,
+  OnDestroy,
+  EventEmitter,
+  ElementRef,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 
-import {fromEvent, interval, of, Subscription} from 'rxjs';
-import { switchMap, take, mapTo} from 'rxjs/operators';
+import {
+  fromEvent,
+  interval,
+  Subscription,
+  timer,
+  Observable
+} from 'rxjs';
 
+import {
+  switchMap,
+  take,
+  mapTo,
+  map
+} from 'rxjs/operators';
 
-export interface Scroll {
+export interface ScrollStart {
   event: Event;
-  state: 'start' | 'end';
+  state: 'start';
 }
+
+export interface ScrollEnd {
+  event: Event;
+  state: 'end';
+}
+
+export type Scroll = ScrollStart | ScrollEnd;
 
 @Component({
   selector: 'vk-scroll',
@@ -22,34 +49,49 @@ export interface Scroll {
     .scrollBox{overflow-y:scroll}
   `]
 })
-export class ScrollComponent implements AfterViewInit {
-  @Input()height = 'auto';
+export class ScrollComponent implements AfterViewInit , OnDestroy {
+  scrollSubscription: Subscription;
 
+  @Input()height = 'auto';
   @Output()scrollStart = new EventEmitter<Scroll>();
   @Output()scrollEnd = new EventEmitter<Scroll>();
-
   @ViewChild('scrollBox')scrollBox: ElementRef;
 
   constructor() {}
 
   ngAfterViewInit() {
-    this.createScrollEvent();
+    this.handleDefineScrollEvent();
   }
 
-  createScrollEvent(): Subscription {
-    const scrollEvent$ = fromEvent(this.scrollBox.nativeElement, 'scroll').pipe(
-      switchMap((ev, i) => i ? interval(200).pipe(
-            mapTo({event: ev, state: 'end'}),
-          ) : of({event: ev, state: 'start'})
+  ngOnDestroy() {
+    this.scrollSubscription.unsubscribe();
+  }
+
+  handleDefineScrollEvent = () => this.scrollSubscription = this.getScrollScrollSubscription();
+
+  getScrollStart = (ev: Event): Observable<any> => timer(0 , 200).pipe(
+    map<any, Scroll>((v, i ) => i ? {event: ev, state: 'end'} : {event: ev, state: 'start'}),
+    take(2),
+  )
+
+  getScrollEnd = (ev): Observable<any> => interval(200).pipe(
+    mapTo<any, Scroll>({event: ev, state: 'end'}),
+    take(2),
+  )
+
+  getScrollScrollSubscription = (): Subscription => {
+    const scroll$ = fromEvent(this.scrollBox.nativeElement, 'scroll').pipe(
+      switchMap(
+        (ev: Event, i: number) => i ? this.getScrollEnd(ev) : this.getScrollStart(ev)
       ),
       take(2)
     );
 
-    return scrollEvent$
+    return scroll$
       .subscribe(
         this.handleNext,
         () => {},
-        () => this.createScrollEvent(),
+        this.handleDefineScrollEvent,
       );
   }
 
@@ -59,8 +101,8 @@ export class ScrollComponent implements AfterViewInit {
         return this.scrollStart.emit(scroll);
       case 'end':
         return this.scrollEnd.emit(scroll);
+      default:
+        return ;
     }
   }
-
-
 }

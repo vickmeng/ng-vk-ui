@@ -9,6 +9,8 @@ import { Scroll } from 'projects/ng-vk-ui/src/lib/scroll/scroll.component';
 export class AppComponent {
   a = 1;
 
+  show = true;
+
   constructor() {
   }
 
