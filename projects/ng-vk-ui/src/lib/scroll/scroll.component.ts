@@ -74,7 +74,7 @@ export class ScrollComponent implements AfterViewInit , OnDestroy {
     take(2),
   )
 
-  getScrollEnd = (ev): Observable<any> => interval(200).pipe(
+  getScrollEnd = (ev: Event): Observable<any> => interval(200).pipe(
     mapTo<number, Scroll>({event: ev, state: 'end'}),
     take(2),
   )
