@@ -70,12 +70,12 @@ export class ScrollComponent implements AfterViewInit , OnDestroy {
   handleDefineScrollEvent = () => this.scrollSubscription = this.getScrollScrollSubscription();
 
   getScrollStart = (ev: Event): Observable<any> => timer(0 , 200).pipe(
-    map<any, Scroll>((v, i ) => i ? {event: ev, state: 'end'} : {event: ev, state: 'start'}),
+    map<number, Scroll>((v, i ) => i ? {event: ev, state: 'end'} : {event: ev, state: 'start'}),
     take(2),
   )
 
   getScrollEnd = (ev): Observable<any> => interval(200).pipe(
-    mapTo<any, Scroll>({event: ev, state: 'end'}),
+    mapTo<number, Scroll>({event: ev, state: 'end'}),
     take(2),
   )
 
